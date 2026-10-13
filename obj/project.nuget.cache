@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "PFsARC+kEmw=",
+  "success": true,
+  "projectFilePath": "/Users/walidalhasn/Desktop/VersioningDemo/VersioningDemo.csproj",
+  "expectedPackageFiles": [
+    "/Users/walidalhasn/.nuget/packages/asp.versioning.abstractions/10.2.1/asp.versioning.abstractions.10.2.1.nupkg.sha512",
+    "/Users/walidalhasn/.nuget/packages/asp.versioning.http/10.2.1/asp.versioning.http.10.2.1.nupkg.sha512",
+    "/Users/walidalhasn/.nuget/packages/asp.versioning.mvc/10.2.1/asp.versioning.mvc.10.2.1.nupkg.sha512",
+    "/Users/walidalhasn/.nuget/packages/asp.versioning.mvc.apiexplorer/10.2.1/asp.versioning.mvc.apiexplorer.10.2.1.nupkg.sha512",
+    "/Users/walidalhasn/.nuget/packages/microsoft.aspnetcore.openapi/10.0.12/microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
+    "/Users/walidalhasn/.nuget/packages/microsoft.openapi/2.12.0/microsoft.openapi.2.12.0.nupkg.sha512"
+  ],
+  "logs": []
+}
