@@ -3,36 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار API Versioning</title>
+    <title>لوحة تحكم النظام الهندسية - ASP.NET Core & EF Core</title>
+    <!-- استخدام Tailwind CSS لتصميم عصري واحترافي -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: Tahoma, sans-serif; background-color: #f4f4f9; text-align: center; padding: 50px; }
-        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; width: 400px; }
-        button { background: #007bff; color: white; border: none; padding: 10px 20px; margin: 10px; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #0056b3; }
-        pre { background: #eee; padding: 10px; border-radius: 5px; text-align: left; direction: ltr; }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
 
-    <div class="container">
-        <h2>نظام إصدارات الـ API</h2>
-        <button onclick="fetchApi('v1')">جلب بيانات الإصدار V1</button>
-        <button onclick="fetchApi('v2')">جلب بيانات الإصدار V2</button>
-        
-        <h3>النتيجة:</h3>
-        <pre id="result">اضغط على أحد الأزرار بالأعلى...</pre>
-    </div>
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-blue-400">🚀 لوحة تحكم مشاريع الـ Web API</h1>
+                <p class="text-slate-400 text-sm mt-1">تطبيق عملي لاحتراف API Versioning وأعماق Entity Framework Core المتقدمة</p>
+            </div>
+            <div class="mt-4 md:mt-0 bg-blue-900/40 border border-blue-500/30 px-4 py-2 rounded-lg text-blue-300 text-xs font-semibold">
+                حالة النظام: متصل ويدعم InMemory DB 🟢
+            </div>
+        </div>
+    </header>
 
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- القسم الأيمن: الشرح والتوثيق الأكاديمي والفني (Documentation Panel) -->
+        <div class="lg:col-span-1 space-y-6">
+            
+            <!-- بطاقة شرح Task 1: API Versioning -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-5 shadow-md">
+                <h2 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
+                    <span>📌</span> الدرس الأول: API Versioning
+                </h2>
+                <p class="text-slate-300 text-sm mt-2 leading-relaxed">
+                    يُستخدم لتطوير وتحديث شكل البيانات المُرجعة (Responses) دون كسر عمل التطبيقات أو العملاء (Clients) القدامى.
+                </p>
+                <div class="mt-3 bg-slate-900 p-3 rounded-lg text-xs space-y-1 text-slate-300 border border-slate-700">
+                    <p><strong>طريقة التنفيذ:</strong> عبر الـ URL Path (`/api/v1/` و `/api/v2/`).</p>
+                    <p><strong>الفرق:</strong> V1 يعيد البيانات الأساسية للمنتج، بينما V2 يعيد البيانات مضافاً إليها اسم الفئة (`CategoryName`).</p>
+                </div>
+            </div>
+
+            <!-- بطاقة شرح Task 2: Advanced EF Core -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-5 shadow-md">
+                <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2">
+                    <span>⚙️</span> الدرس الثاني: Advanced EF Core
+                </h2>
+                <ul class="text-slate-300 text-xs mt-3 space-y-2 list-disc list-inside leading-relaxed">
+                    <li><strong>AsNoTracking & Select:</strong> لتقليل استهلاك الذاكرة وجلب الحقول المطلوبة فقط (Projection) عبر استعلام SQL واحد (JOIN) لتجنب مشكلة <em>N+1 Queries</em>.</li>
+                    <li><strong>Pagination:</strong> تقسيم البيانات عبر `Skip` و `Take` لأداء أسرع.</li>
+                    <li><strong>Indexes & Soft Delete:</strong> فهرسة حقل `Name` لتسريع البحث، واستخدام `HasQueryFilter` لإخفاء المحذوفين تلقائياً.</li>
+                    <li><strong>Change Tracking & Concurrency:</strong> التعديل الآمن عبر تتبع الكيانات، وحماية البيانات من الكتابة المتزامنة عبر `RowVersion` واستثناء `DbUpdateConcurrencyException`.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- القسم الأيسر: منطقة التفاعل والاختبار الحية (Interactive Explorer) -->
+        <div class="lg:col-span-2 space-y-6">
+
+            <!-- شريحة اختبار API Versioning (Task 1) -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md">
+                <h3 class="text-md font-bold text-blue-300 mb-3">🧪 تجربة إصدارات الـ API (Task 1)</h3>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="fetchApiVersion('v1')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition shadow">
+                        جلب بيانات V1 (`/api/v1/products`)
+                    </button>
+                    <button onclick="fetchApiVersion('v2')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition shadow">
+                        جلب بيانات V2 (`/api/v2/products`)
+                    </button>
+                </div>
+            </div>
+
+            <!-- شريحة اختبار Advanced EF Core & Pagination (Task 2) -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md space-y-4">
+                <h3 class="text-md font-bold text-purple-300">📊 اختبار الاستعلامات المتقدمة والـ Pagination (Task 2)</h3>
+                
+                <div class="flex flex-wrap items-center gap-3 bg-slate-900 p-3 rounded-lg border border-slate-700">
+                    <label class="text-xs text-slate-300">رقم الصفحة:</label>
+                    <input type="number" id="pageNumber" value="1" min="1" class="bg-slate-800 text-white px-2 py-1 rounded w-16 text-center border border-slate-600 text-sm">
+                    
+                    <label class="text-xs text-slate-300">حجم الصفحة:</label>
+                    <input type="number" id="pageSize" value="5" min="1" max="50" class="bg-slate-800 text-white px-2 py-1 rounded w-16 text-center border border-slate-600 text-sm">
+                    
+                    <button onclick="fetchAdvancedProducts()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition">
+                        تنفيذ الاستعلام (GET Products)
+                    </button>
+                </div>
+            </div>
+
+            <!-- شريحة اختبار التعديل المحمي والـ Concurrency (PUT Request) -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md space-y-4">
+                <h3 class="text-md font-bold text-amber-300">✍️ تجربة التعديل المحمي والـ Change Tracking (PUT)</h3>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">معرف المنتج (ID)</label>
+                        <input type="number" id="prodId" value="1" class="w-full bg-slate-900 text-white px-3 py-1.5 rounded border border-slate-700 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">الاسم الجديد</label>
+                        <input type="text" id="prodName" value="Laptop Pro 2026" class="w-full bg-slate-900 text-white px-3 py-1.5 rounded border border-slate-700 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">السعر الجديد</label>
+                        <input type="number" id="prodPrice" value="29000" class="w-full bg-slate-900 text-white px-3 py-1.5 rounded border border-slate-700 text-sm">
+                    </div>
+                </div>
+                <button onclick="updateProduct()" class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-lg text-xs font-semibold transition w-full sm:w-auto">
+                    حفظ التعديل بفحص الـ Concurrency Token
+                </button>
+            </div>
+
+            <!-- شريحة عرض النتائج والاستعلامات -->
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">📦 نافذة الاستجابة (API Response Viewer)</h3>
+                    <button onclick="clearConsole()" class="text-xs text-slate-400 hover:text-white underline">مسح الشاشة</button>
+                </div>
+                <pre id="result" class="bg-slate-950 text-emerald-400 p-4 rounded-lg text-xs overflow-x-auto font-mono max-h-96 border border-slate-800">جاهز لاستقبال الطلبات... اختر أحد العمليات بالأعلى.</pre>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JavaScript للتحكم بالطلبات وتحديث الـ UI -->
     <script>
-        async function fetchApi(version) {
+        async function fetchApiVersion(version) {
             const url = `/api/${version}/products`;
+            showLoading(url);
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+                displayResult(url, response.status, data);
             } catch (error) {
-                document.getElementById('result').innerText = "حدث خطأ أثناء جلب البيانات: " + error;
+                displayError(error);
             }
+        }
+
+        async function fetchAdvancedProducts() {
+            const pageNum = document.getElementById('pageNumber').value;
+            const pageSize = document.getElementById('pageSize').value;
+            const url = `/api/products?pageNumber=${pageNum}&pageSize=${pageSize}`;
+            
+            showLoading(url);
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                displayResult(url, response.status, data);
+            } catch (error) {
+                displayError(error);
+            }
+        }
+
+        async function updateProduct() {
+            const id = document.getElementById('prodId').value;
+            const name = document.getElementById('prodName').value;
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const url = `/api/products/${id}`;
+
+            showLoading(`PUT ${url}`);
+            try {
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, price })
+                });
+                const data = await response.json();
+                displayResult(url, response.status, data);
+            } catch (error) {
+                displayError(error);
+            }
+        }
+
+        function showLoading(url) {
+            document.getElementById('result').innerText = `⏳ جاري إرسال الطلب إلى: ${url} ...`;
+        }
+
+        function displayResult(url, status, data) {
+            const output = `[Status: ${status}] Endpoint: ${url}\n\n` + JSON.stringify(data, null, 2);
+            document.getElementById('result').innerText = output;
+        }
+
+        function displayError(error) {
+            document.getElementById('result').innerText = "❌ حدث خطأ أثناء الاتصال بالخادم: " + error;
+        }
+
+        function clearConsole() {
+            document.getElementById('result').innerText = "تم مسح الشاشة.";
         }
     </script>
 
