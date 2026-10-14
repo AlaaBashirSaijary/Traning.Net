@@ -18,7 +18,7 @@
         <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
             <div>
                 <h1 class="text-2xl font-bold text-blue-400">🚀 لوحة تحكم مشاريع الـ Web API</h1>
-                <p class="text-slate-400 text-sm mt-1">تطبيق عملي لاحتراف API Versioning وأعماق Entity Framework Core المتقدمة</p>
+                <p class="text-slate-400 text-sm mt-1">تطبيق عملي لاحتراف API Versioning وأعماق Entity Framework Core (Pagination, Soft Delete, Concurrency)</p>
             </div>
             <div class="mt-4 md:mt-0 bg-blue-900/40 border border-blue-500/30 px-4 py-2 rounded-lg text-blue-300 text-xs font-semibold">
                 حالة النظام: متصل ويدعم InMemory DB 🟢
@@ -29,74 +29,84 @@
     <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        <!-- القسم الأيمن: الشرح والتوثيق الأكاديمي والفني (Documentation Panel) -->
+        <!-- القسم الأيمن: الشرح والتوثيق -->
         <div class="lg:col-span-1 space-y-6">
-            
-            <!-- بطاقة شرح Task 1: API Versioning -->
             <div class="bg-slate-800 border border-slate-700 rounded-xl p-5 shadow-md">
                 <h2 class="text-lg font-bold text-emerald-400 flex items-center gap-2">
-                    <span>📌</span> الدرس الأول: API Versioning
+                    <span>📌</span> إصدارات الـ API Versioning
                 </h2>
                 <p class="text-slate-300 text-sm mt-2 leading-relaxed">
-                    يُستخدم لتطوير وتحديث شكل البيانات المُرجعة (Responses) دون كسر عمل التطبيقات أو العملاء (Clients) القدامى.
+                    يُستخدم لتطوير وتحديث شكل البيانات المُرجعة (Responses) دون كسر عمل العملاء القدامى.
                 </p>
                 <div class="mt-3 bg-slate-900 p-3 rounded-lg text-xs space-y-1 text-slate-300 border border-slate-700">
-                    <p><strong>طريقة التنفيذ:</strong> عبر الـ URL Path (`/api/v1/` و `/api/v2/`).</p>
-                    <p><strong>الفرق:</strong> V1 يعيد البيانات الأساسية للمنتج، بينما V2 يعيد البيانات مضافاً إليها اسم الفئة (`CategoryName`).</p>
+                    <p><strong>V1:</strong> يعيد البيانات الأساسية للمنتج.</p>
+                    <p><strong>V2:</strong> يعيد البيانات مضافاً إليها اسم الفئة (`CategoryName`).</p>
                 </div>
             </div>
 
-            <!-- بطاقة شرح Task 2: Advanced EF Core -->
             <div class="bg-slate-800 border border-slate-700 rounded-xl p-5 shadow-md">
                 <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2">
-                    <span>⚙️</span> الدرس الثاني: Advanced EF Core
+                    <span>⚙️</span> ميزات Advanced EF Core
                 </h2>
                 <ul class="text-slate-300 text-xs mt-3 space-y-2 list-disc list-inside leading-relaxed">
-                    <li><strong>AsNoTracking & Select:</strong> لتقليل استهلاك الذاكرة وجلب الحقول المطلوبة فقط (Projection) عبر استعلام SQL واحد (JOIN) لتجنب مشكلة <em>N+1 Queries</em>.</li>
-                    <li><strong>Pagination:</strong> تقسيم البيانات عبر `Skip` و `Take` لأداء أسرع.</li>
-                    <li><strong>Indexes & Soft Delete:</strong> فهرسة حقل `Name` لتسريع البحث، واستخدام `HasQueryFilter` لإخفاء المحذوفين تلقائياً.</li>
-                    <li><strong>Change Tracking & Concurrency:</strong> التعديل الآمن عبر تتبع الكيانات، وحماية البيانات من الكتابة المتزامنة عبر `RowVersion` واستثناء `DbUpdateConcurrencyException`.</li>
+                    <li><strong>Soft Delete:</strong> حذف آمن للسجل عبر تغيير قيمة حقل `IsDeleted` إلى true.</li>
+                    <li><strong>Pagination & Projection:</strong> تقسيم النتائج وجلب الحقول المطلوبة عبر `Select`.</li>
+                    <li><strong>Concurrency Control:</strong> الحماية من التعديلات المتزامنة عبر الـ `RowVersion`.</li>
                 </ul>
             </div>
-
         </div>
 
-        <!-- القسم الأيسر: منطقة التفاعل والاختبار الحية (Interactive Explorer) -->
+        <!-- القسم الأيسر: منطقة التفاعل وعرض المنتجات -->
         <div class="lg:col-span-2 space-y-6">
 
-            <!-- شريحة اختبار API Versioning (Task 1) -->
-            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md">
-                <h3 class="text-md font-bold text-blue-300 mb-3">🧪 تجربة إصدارات الـ API (Task 1)</h3>
-                <div class="flex flex-wrap gap-3">
-                    <button onclick="fetchApiVersion('v1')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition shadow">
-                        جلب بيانات V1 (`/api/v1/products`)
-                    </button>
-                    <button onclick="fetchApiVersion('v2')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-semibold transition shadow">
-                        جلب بيانات V2 (`/api/v2/products`)
-                    </button>
-                </div>
-            </div>
-
-            <!-- شريحة اختبار Advanced EF Core & Pagination (Task 2) -->
+            <!-- شريحة التحكم واختبار الجلب -->
             <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md space-y-4">
-                <h3 class="text-md font-bold text-purple-300">📊 اختبار الاستعلامات المتقدمة والـ Pagination (Task 2)</h3>
+                <h3 class="text-md font-bold text-blue-300">📦 إدارة وعرض المنتجات</h3>
                 
-                <div class="flex flex-wrap items-center gap-3 bg-slate-900 p-3 rounded-lg border border-slate-700">
-                    <label class="text-xs text-slate-300">رقم الصفحة:</label>
-                    <input type="number" id="pageNumber" value="1" min="1" class="bg-slate-800 text-white px-2 py-1 rounded w-16 text-center border border-slate-600 text-sm">
-                    
-                    <label class="text-xs text-slate-300">حجم الصفحة:</label>
-                    <input type="number" id="pageSize" value="5" min="1" max="50" class="bg-slate-800 text-white px-2 py-1 rounded w-16 text-center border border-slate-600 text-sm">
-                    
-                    <button onclick="fetchAdvancedProducts()" class="bg-purple-600 hover:bg-purple-500 text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition">
-                        تنفيذ الاستعلام (GET Products)
+                <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-900 p-4 rounded-lg border border-slate-700">
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs text-slate-300">الإصدار:</label>
+                        <select id="apiVersionSelect" class="bg-slate-800 text-white px-2 py-1.5 rounded border border-slate-600 text-xs">
+                            <option value="v1">V1 (بيانات أساسية)</option>
+                            <option value="v2" selected>V2 (مع اسم الفئة)</option>
+                        </select>
+
+                        <label class="text-xs text-slate-300 mr-2">الصفحة:</label>
+                        <input type="number" id="pageNumber" value="1" min="1" class="bg-slate-800 text-white px-2 py-1.5 rounded w-14 text-center border border-slate-600 text-xs">
+                        
+                        <label class="text-xs text-slate-300">الحجم:</label>
+                        <input type="number" id="pageSize" value="10" min="1" max="50" class="bg-slate-800 text-white px-2 py-1.5 rounded w-14 text-center border border-slate-600 text-xs">
+                    </div>
+
+                    <button onclick="loadProductsTable()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-semibold transition shadow">
+                        جلب وعرض المنتجات 🔄
                     </button>
+                </div>
+
+                <!-- جدول عرض المنتجات -->
+                <div class="overflow-x-auto rounded-lg border border-slate-700">
+                    <table class="w-full text-right text-xs text-slate-300">
+                        <thead class="bg-slate-900 text-slate-400 uppercase border-b border-slate-700">
+                            <tr>
+                                <th class="p-3">ID</th>
+                                <th class="p-3">اسم المنتج</th>
+                                <th class="p-3">السعر</th>
+                                <th class="p-3">الفئة (V2)</th>
+                                <th class="p-3 text-center">الإجراءات (Soft Delete)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody" class="divide-y divide-slate-700 bg-slate-800/50">
+                            <tr>
+                                <td colspan="5" class="p-4 text-center text-slate-400">جاري تحميل البيانات...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- شريحة اختبار التعديل المحمي والـ Concurrency (PUT Request) -->
+            <!-- شريحة اختبار التعديل المحمي والـ Concurrency -->
             <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md space-y-4">
-                <h3 class="text-md font-bold text-amber-300">✍️ تجربة التعديل المحمي والـ Change Tracking (PUT)</h3>
+                <h3 class="text-md font-bold text-amber-300">✍️ تجربة التعديل المحمي (PUT & Concurrency)</h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
@@ -117,84 +127,124 @@
                 </button>
             </div>
 
-            <!-- شريحة عرض النتائج والاستعلامات -->
+            <!-- نافذة عرض الرد الخام (JSON Viewer) -->
             <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-md">
                 <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">📦 نافذة الاستجابة (API Response Viewer)</h3>
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">📦 نافذة الاستجابة التقنية (API Response JSON)</h3>
                     <button onclick="clearConsole()" class="text-xs text-slate-400 hover:text-white underline">مسح الشاشة</button>
                 </div>
-                <pre id="result" class="bg-slate-950 text-emerald-400 p-4 rounded-lg text-xs overflow-x-auto font-mono max-h-96 border border-slate-800">جاهز لاستقبال الطلبات... اختر أحد العمليات بالأعلى.</pre>
+                <pre id="result" class="bg-slate-950 text-emerald-400 p-4 rounded-lg text-xs overflow-x-auto font-mono max-h-60 border border-slate-800">جاهز لاستقبال الطلبات...</pre>
             </div>
 
         </div>
 
     </main>
 
-    <!-- JavaScript للتحكم بالطلبات وتحديث الـ UI -->
+    <!-- جافاسكريبت التفاعل -->
     <script>
-        async function fetchApiVersion(version) {
-            const url = `/api/${version}/products`;
-            showLoading(url);
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                displayResult(url, response.status, data);
-            } catch (error) {
-                displayError(error);
-            }
-        }
-
-        async function fetchAdvancedProducts() {
+        async function loadProductsTable() {
+            const version = document.getElementById('apiVersionSelect').value;
             const pageNum = document.getElementById('pageNumber').value;
             const pageSize = document.getElementById('pageSize').value;
-            const url = `/api/products?pageNumber=${pageNum}&pageSize=${pageSize}`;
             
-            showLoading(url);
+            const url = `/api/${version}/products?pageNumber=${pageNum}&pageSize=${pageSize}`;
+            
             try {
                 const response = await fetch(url);
-                const data = await response.json();
-                displayResult(url, response.status, data);
+                const text = await response.text();
+                const data = text ? JSON.parse(text) : [];
+
+                document.getElementById('result').innerText = `[Status: ${response.status}] Endpoint: ${url}\n\n` + JSON.stringify(data, null, 2);
+
+                const tbody = document.getElementById('productsTableBody');
+                tbody.innerHTML = '';
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">لا توجد منتجات متاحة حالياً.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(p => {
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-slate-700/50 transition";
+                    row.innerHTML = `
+                        <td class="p-3 font-mono">${p.id}</td>
+                        <td class="p-3 font-semibold text-white">${p.name}</td>
+                        <td class="p-3 text-emerald-400">${p.price} $</td>
+                        <td class="p-3">${p.categoryName ? p.categoryName : '-'}</td>
+                        <td class="p-3 text-center">
+                            <button onclick="softDeleteProduct(${p.id})" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded text-xs transition shadow">
+                                حذف (Soft Delete) 🗑️
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
             } catch (error) {
-                displayError(error);
+                document.getElementById('result').innerText = "❌ حدث خطأ أثناء جلب البيانات: " + error;
             }
         }
 
+        async function softDeleteProduct(id) {
+            if (!confirm(`هل أنت متأكد من تنفيذ الحذف الناعم للمنتج رقم ${id}؟`)) return;
+
+            const version = document.getElementById('apiVersionSelect').value;
+            const url = `/api/${version}/products/${id}`; // استخدام الإصدار الحالي لتفادي خطأ 404
+
+            try {
+                const response = await fetch(url, { method: 'DELETE' });
+                const text = await response.text();
+                const data = text ? JSON.parse(text) : { message: "تم الحذف بنجاح" };
+
+                document.getElementById('result').innerText = `[DELETE Status: ${response.status}]\n\n` + JSON.stringify(data, null, 2);
+                loadProductsTable();
+            } catch (error) {
+                alert("حدث خطأ أثناء عملية الحذف: " + error);
+            }
+        }
         async function updateProduct() {
             const id = document.getElementById('prodId').value;
             const name = document.getElementById('prodName').value;
             const price = parseFloat(document.getElementById('prodPrice').value);
-            const url = `/api/products/${id}`;
+            
+            const version = document.getElementById('apiVersionSelect').value;
+            const url = `/api/${version}/products/${id}`;
 
-            showLoading(`PUT ${url}`);
             try {
                 const response = await fetch(url, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, price })
+                    body: JSON.stringify({ name: name, price: price })
                 });
-                const data = await response.json();
-                displayResult(url, response.status, data);
+
+                // قراءة الرد كنص بغض النظر عن حالة الـ Status (سواء 200 أو 404 أو 409)
+                const text = await response.text();
+                let data;
+                try {
+                    data = text ? JSON.parse(text) : { status: response.status };
+                } catch (e) {
+                    data = { rawResponse: text };
+                }
+                
+                // عرض النتيجة بالتفصيل داخل نافذة الاستجابة التقنية
+                document.getElementById('result').innerText = `[PUT Status: ${response.status}] Endpoint: ${url}\n\n` + JSON.stringify(data, null, 2);
+                
+                if (response.ok) {
+                    loadProductsTable(); // تحديث الجدول في حال النجاح فقط
+                }
             } catch (error) {
-                displayError(error);
+                document.getElementById('result').innerText = "❌ حدث خطأ في الشبكة: " + error;
             }
-        }
-
-        function showLoading(url) {
-            document.getElementById('result').innerText = `⏳ جاري إرسال الطلب إلى: ${url} ...`;
-        }
-
-        function displayResult(url, status, data) {
-            const output = `[Status: ${status}] Endpoint: ${url}\n\n` + JSON.stringify(data, null, 2);
-            document.getElementById('result').innerText = output;
-        }
-
-        function displayError(error) {
-            document.getElementById('result').innerText = "❌ حدث خطأ أثناء الاتصال بالخادم: " + error;
         }
 
         function clearConsole() {
             document.getElementById('result').innerText = "تم مسح الشاشة.";
         }
+
+        window.onload = () => {
+            loadProductsTable();
+        };
     </script>
 
 </body>
